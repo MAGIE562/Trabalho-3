@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void aloca(int **p,int tam);
+void leitura(int *p);
+void mostra(int *p,int tam);
+void subtracao(int *p,int tam,int **pn,int *qn);
+
+main()
+{
+int *ptr=NULL,cont=0,*pneg=NULL,qneg=0;
+char op;
+do{
+ aloca(&ptr,cont+1);
+ leitura(ptr+cont);
+ cont++;
+ printf("\nDeseja continuar <S/N>: ");
+ scanf("%c",&op);
+ fflush(stdin);
+  }while(op!='n'&&op!='N');
+system("cls");
+mostra(ptr,cont);
+subtracao(ptr,cont,&pneg,&qneg);
+printf("\nValores da Subtracao Negativos:\n");
+mostra(pneg,qneg);
+}//main
+
+void aloca(int **p,int tam)
+{
+if((*p=(int*)realloc(*p,tam*sizeof(int)))==NULL)
+  exit(1); 
+}//aloca
+
+void leitura(int *p)
+{
+printf("\nNumero: ");
+scanf("%i",p);
+fflush(stdin); 
+}//leitura
+
+void mostra(int *p,int tam)
+{
+int i;
+for(i=0;i<tam;i++,p++)
+  printf("\n%i",*p);
+printf("\n\n");
+system("pause");
+}//mostra
+
+void subtracao(int *p,int tam,int **pn,int *qn)
+{
+int i,sub;
+for(i=0;i<tam/2;i++)
+  {
+   sub=*(p+i)-*(p+tam-1-i);
+   if(sub<0) //negativo
+    {
+      aloca(pn,*qn+1);
+    *(*pn+*qn)=sub;
+    (*qn)++;    
+  }//if
+   }//for
+if(tam%2==1) //qtde eh impar
+  if(*(p+i)<0) //if(*p+tam/2)<0
+    {
+      aloca(pn,*qn+1);
+   *(*pn+*qn)=*(p+i);
+   (*qn)++; 
+ }//if
+}//subtracao{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": []
+}
